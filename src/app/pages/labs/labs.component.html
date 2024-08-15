@@ -16,7 +16,7 @@
   <button [disabled]="disabled">Click me</button>
   <p>person: {{ person.name }}</p>
   <hr />
-  <button (click)="clickHandler()">click me</button>
+  <button (click)=clickHandler()>click me</button>
   <button (dblclick)="clickHandler()">double me</button>
   <p>(change)</p>
   <input type="number" [value]="person.age" (change)="changeHandler($event)">
