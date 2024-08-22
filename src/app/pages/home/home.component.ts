@@ -1,26 +1,20 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 
-import { Task } from '../../models/task.model';
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  tasks = signal<Task[]>([
-    {
-      id: Date.now(),
-      title: 'Create project',
-      completed: false
-    },
-    {
-      id: Date.now(),
-      title: 'Create component',
-      completed: false
-    },
+
+  tasks = signal([
+    'Instalar Angular CLI',
+    'Crear proyecto',
+    'Crear componente',
+    'Crear servicio',
   ]);
 
   changeHandler(event: Event) {
@@ -30,29 +24,11 @@ export class HomeComponent {
   }
 
   addTask(title: string) {
-    const newTask = {
-      id: Date.now(),
-      title,
-      completed: false,
-    };
-    this.tasks.update((tasks) => [...tasks, newTask]);
+    this.tasks.update(prevState => [...prevState, title]);
   }
 
   deleteTask(index: number) {
-    this.tasks.update((tasks) => tasks.filter((task, position) => position !== index));
+    this.tasks.update((tasks) => tasks.filter((_, i) => i !== index));
   }
 
-  updateTask(index: number) {
-    this.tasks.update((tasks) => {
-      return tasks.map((task, position) => {
-        if (position === index) {
-          return {
-            ...task,
-            completed: !task.completed
-          }
-        }
-        return task;
-      })
-    })
-  }
 }
