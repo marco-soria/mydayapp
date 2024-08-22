@@ -61,4 +61,29 @@
     <div>Soy Ariana y soy menor de 18</div>
   }
 
+
+  <hr />
+  <input type="text" [value]="person().name" (change)="changeName($event)">
+
+  <div>
+  @switch (person().name) {
+    @case('Ariana') {
+      <p>yo soy Ariana</p>
+    }
+    @case('julian') {
+      <p>yo soy julian</p>
+    }
+    @case('ana') {
+      <p>yo soy ana</p>
+    }
+    @case('valentina') {
+      <p>yo soy valentina</p>
+    }
+    @default {
+      <p>yo no soy nadie</p>
+    }
+  }
+</div>
+
+
 </div>
