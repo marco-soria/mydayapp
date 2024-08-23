@@ -32,7 +32,7 @@ export class LabsComponent {
   widthCtrl = new FormControl(50, {
     nonNullable: true,
   });
-  nameCtrl = new FormControl('nicolas', {
+  nameCtrl = new FormControl('Ariana', {
     nonNullable: true,
     validators: [
       Validators.required,
