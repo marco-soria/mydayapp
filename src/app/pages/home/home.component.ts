@@ -30,7 +30,7 @@ export class HomeComponent {
     },
     {
       id: uuidv4(),
-      title: 'Crear componenentes',
+      title: 'Crear componentes',
       completed: false
     }
   ]);
