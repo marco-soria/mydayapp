@@ -23,20 +23,20 @@
     <section class="main">
       <ul class="todo-list">
 
-        @for(task of tasks(); track task){
+        @for(task of tasksByFilter(); track task.id){
 
         <li
-          (dblclick)="updateTaskEditingMode($index)"
+          (dblclick)="updateTaskEditingMode(task.id)"
           [class.editing]="task.editing"
           [class.completed]="task.completed"
         >
 
           <div class="view">
-            <input (change)="updateTask($index)" class="toggle" type="checkbox" [checked]="task.completed" />
+            <input (change)="updateTask(task.id)" class="toggle" type="checkbox" [checked]="task.completed" />
             <label>{{ task.title }}</label>
-            <button class="destroy" (click)="deleteTask($index)"></button>
+            <button class="destroy" (click)="deleteTask(task.id)"></button>
           </div>
-          <input class="edit" (keydown.enter)="updateTaskText($index, $event)" [value]="task.title" />
+          <input class="edit" (keydown.enter)="updateTaskText(task.id, $event)" [value]="task.title" />
         </li>
       }
         <!--
@@ -76,17 +76,31 @@
        @else {<span class="todo-count"><strong>{{tasks().length}}</strong> items</span>}
 
       <!-- Remove this if you don't implement routing -->
+
+      <!-- <ul class="filters">
+        <li>
+          <a (click)="changeFilter('all')" class="selected">All</a>
+        </li>
+        <li>
+          <a (click)="changeFilter('pending')">Pending</a>
+        </li>
+        <li>
+          <a (click)="changeFilter('completed')">Completed</a>
+        </li>
+      </ul> -->
       <ul class="filters">
         <li>
-          <a routerLink="/" class="selected">All</a>
+          <a (click)="changeFilter(Filters.All)" class="selected">All</a>
         </li>
         <li>
-          <a routerLink="/pending">Pending</a>
+          <a (click)="changeFilter(Filters.Pending)">Pending</a>
         </li>
         <li>
-          <a routerLink="/completed">Completed</a>
+          <a (click)="changeFilter(Filters.Completed)">Completed</a>
         </li>
       </ul>
+
+
       <!-- Hidden if no completed items are left ↓ -->
       <button class="clear-completed">Clear completed</button>
     </footer>
