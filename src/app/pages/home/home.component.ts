@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, Injector, signal, computed, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid'
@@ -74,6 +74,25 @@ export class HomeComponent {
       Validators.minLength(3),
     ]
   });
+
+  injector = inject(Injector);
+
+  ngOnInit() {
+    const storage = localStorage.getItem('tasks');
+    if (storage) {
+      const tasks = JSON.parse(storage);
+      this.tasks.set(tasks);
+    }
+    this.trackTasks();
+  }
+
+  trackTasks() {
+    effect(() => {
+      const tasks = this.tasks();
+      console.log(tasks);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, { injector: this.injector });
+  }
 
   // changeHandler(event: Event) {
   //   const input = event.target as HTMLInputElement;
@@ -233,5 +252,14 @@ export class HomeComponent {
 
   trackByTaskId(index: number, task: Task): string {
     return task.id;
+  }
+
+
+  clearCompletedTasks(): void {
+    this.tasks.update(tasks => tasks.filter(task => !task.completed));
+  }
+
+  hasCompletedTasks(): boolean {
+    return this.tasks().some(task => task.completed);
   }
 }
